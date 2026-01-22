@@ -48,10 +48,33 @@ app.post('/api/scan', async (req, res) => {
 
     await newScan.save();
 
+    const orderDetails = {
+      customer: {
+        name: "Rahul Sharma",
+        phone: "+91 98765 43210",
+        address: "Flat 402, Sunshine Apartments, HSR Layout, Bangalore"
+      },
+      items: [
+        { name: "Chicken Biryani", quantity: 1, price: 250 },
+        { name: "Butter Naan", quantity: 2, price: 40 },
+        { name: "Paneer Butter Masala", quantity: 1, price: 220 },
+        { name: "Coke", quantity: 2, price: 40 }
+      ],
+      billDetails: {
+        subtotal: 590,
+        deliveryFee: 40,
+        tax: 30,
+        total: 660
+      },
+      paymentStatus: "PAID",
+      instructions: "Leave at door, do not ring bell"
+    };
+
     res.status(201).json({
       success: true,
       message: 'Pickup logged successfully',
-      data: newScan
+      data: newScan,
+      orderDetails
     });
   } catch (error) {
     console.error('Scan Error:', error);
